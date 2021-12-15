@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------------------------------------
+ * LedMatrix.cpp
+ * 
+ * Implements a class for interfacing with a MAX7219-based 8x8 LED matrix over SPI
+ * 
+ * (C) 2021 Meebleeps
+*-----------------------------------------------------------------------------------------------------------
+*/
+
 #include "LedMatrix.h"
 #include <SPI.h>
 #include <mozzi_rand.h>

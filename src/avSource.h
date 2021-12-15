@@ -1,6 +1,11 @@
-/*
-  avSequencer.h - defines a mutating generative sequencer
-
+/*----------------------------------------------------------------------------------------------------------
+ * avSourcePhasor.h
+ * 
+ * Defines a base class MutantSource for all synth voices and  a derived class 
+ * MutantPhasor - a 2-oscillator synth voice with low pass filter, volume envelope and filter envelope
+ * 
+ * (C) 2021 Meebleeps
+*-----------------------------------------------------------------------------------------------------------
 */
 
 #ifndef avSource_h

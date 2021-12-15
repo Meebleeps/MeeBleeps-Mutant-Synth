@@ -1,4 +1,12 @@
-
+/*----------------------------------------------------------------------------------------------------------
+ * avSequencer.cpp
+ * 
+ * Implements a generative sequencer with multiple generative algorithms, musical scale quantisation,
+ * variable sequence length (up to 16 steps) and multiple parameter-lock (motion-sequencing) channels
+ * 
+ * (C) 2021 Meebleeps
+*-----------------------------------------------------------------------------------------------------------
+*/
 #include <mozzi_rand.h>
 #include <MozziGuts.h>
 

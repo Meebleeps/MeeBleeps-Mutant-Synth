@@ -1,3 +1,18 @@
+/*----------------------------------------------------------------------------------------------------------
+ * MutantMozziSynth.ino
+ * 
+ * Main project file for the Mutant Mozzi Synth. 
+ * 
+ * Instantiates all mutant class objects 
+ * Calls the Mozzi audio hook functions
+ * manages the user interface
+ * 
+ * was originally developed in Arduino IDE before moving to VS Code
+ * 
+ * (C) 2021 Meebleeps
+*-----------------------------------------------------------------------------------------------------------
+*/
+
 #include <Arduino.h>
 #include <MozziGuts.h>
 #include <mozzi_rand.h>

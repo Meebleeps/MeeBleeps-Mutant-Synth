@@ -1,6 +1,11 @@
-/*
-  avSequencer.h - defines a mutating generative sequencer
-
+/*----------------------------------------------------------------------------------------------------------
+ * avSequencer.h
+ * 
+ * Defines a generative sequencer with multiple generative algorithms, musical scale quantisation,
+ * variable sequence length (up to 16 steps) and multiple parameter-lock (motion-sequencing) channels
+ * 
+ * (C) 2021 Meebleeps
+*-----------------------------------------------------------------------------------------------------------
 */
 
 #ifndef avSequencer_h

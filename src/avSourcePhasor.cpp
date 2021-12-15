@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------------------------------------
+ * avSourcePhasor.cpp
+ * 
+ * Implements a 2-oscillator synth voice with low pass filter, volume envelope and filter envelope
+ * 
+ * (C) 2021 Meebleeps
+*-----------------------------------------------------------------------------------------------------------
+*/
+
 #include <MozziGuts.h>
 #include <mozzi_midi.h>
 #include <mozzi_rand.h>
