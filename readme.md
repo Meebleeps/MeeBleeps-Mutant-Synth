@@ -1,7 +1,5 @@
 # Meebleeps Mutant Mozzi Synth
 
-### sound synthesis library for Arduino  
-
 My first Arduino project started with the plan to push lfo/envelope voltages to my Volca Modular, but thanks to inspiration from Hagiwo and the Mozzi Library it turned into a cool little generative synth that I can let run all day, built to sync & fit with my Volca collection.
 
 https://www.youtube.com/watch?v=d2Lml1Z9uWc
