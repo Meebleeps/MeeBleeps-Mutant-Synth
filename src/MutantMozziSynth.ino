@@ -26,7 +26,7 @@
 
 
 #define MAX_ANALOG_INPUTS               6
-#define MAX_ANALOG_VALUE                1023
+#define MAX_ANALOG_VALUE                1000
 
 // these may change depending on how analog pots are wired up
 #define ANALOG_INPUT_OSC2TUNE           0
@@ -55,7 +55,7 @@
 #define INTERFACE_MODE_SHIFT  1
 
 // some settings persist on-screen after being changed - for this many millis
-#define DISPLAY_SETTING_CHANGE_PERSIST_MILLIS 350
+#define DISPLAY_SETTING_CHANGE_PERSIST_MILLIS 500
 
 // motion recordind mode, depending on whether the REC button is held with/without FUNC
 #define MOTION_RECORD_NONE  0
@@ -79,7 +79,7 @@ const byte BITMAP_NUMERALS[8][8]  = {
                                     };
 const byte BITMAP_ALPHA[7][8]  = {
                                      {B00000000,B00000000,B00000000,B11100000,B10100000,B11100000,B10100000,B10100111}
-                                    ,{B00000000,B00000000,B00000000,B11100000,B10100000,B11100000,B10100111,B11100000}
+                                    ,{B00000000,B00000000,B00000000,B11100000,B10100000,B11000000,B10100111,B11100000}
                                     ,{B00000000,B00000000,B00000000,B11100000,B10000000,B10000111,B10000000,B11100000}
                                     ,{B00000000,B00000000,B00000000,B11000000,B10100111,B10100000,B10100000,B11000000}
                                     ,{B00000000,B00000000,B00000000,B11100111,B10000000,B11000000,B10000000,B11100000}
@@ -137,8 +137,8 @@ byte updateCounter    = 0;
 byte interfaceMode    = INTERFACE_MODE_NORMAL;
 byte motionRecordMode = MOTION_RECORD_NONE;
 
-// last time a bitmap setting was displayed
-uint32_t  lastSettingDisplayTimeMillis;
+// a bitmap setting is being displayed
+byte settingDisplayIconOn = false;
 
 //TODO: this should probably be in the sequencer
 uint8_t lastStepParameterLock[6] = {false,false,false,false,false,false};
@@ -154,7 +154,7 @@ LedMatrix         ledDisplay;
 
 // timer to pull sync output low at the end of the pulse 
 EventDelay        syncOutputTimer;
-
+EventDelay        settingDisplayTimer;
 
 
 /*----------------------------------------------------------------------------------------------------------
@@ -189,7 +189,8 @@ void initialiseDisplay()
   ledDisplay.initialise();
   ledDisplay.setOrientation(LEDMATRIX_ORIENTATION_0);
   
-  lastSettingDisplayTimeMillis = millis();
+  settingDisplayTimer.start(0);
+  settingDisplayIconOn = false;
 
   // display logo intro
   for (int i=10; i< 100; i+=10)
@@ -582,7 +583,9 @@ void updateButtonControls()
         startStopSequencer();     
         break;
       case INTERFACE_MODE_SHIFT:    
-        sequencer.syncPulse(SYNC_STEPS_PER_TAP);  // todo: send tap tempo message to the sequencer
+        // send tap tempo message to the sequencer
+        // todo: average the last 
+        sequencer.syncPulse(SYNC_STEPS_PER_TAP);  
         break;
     }
   }
@@ -617,7 +620,8 @@ void updateButtonControls()
 
   for (int i=0; i<MAX_BUTTON_INPUTS; i++)
   {
-    //TODO: remove 
+    //for debug only
+    /*
     if (iLastButton[i] != iCurrentButton[i])
     {
       Serial.print(F("Button state changed - button["));
@@ -627,6 +631,7 @@ void updateButtonControls()
 
       ledDisplay.setPixel(7, i+1, iCurrentButton[i] == HIGH);
     }
+    */
     iLastButton[i] = iCurrentButton[i];
   }
 
@@ -774,8 +779,7 @@ void startStopSequencer()
 void updateAlgorithm()
 {
   sequencer.nextAlgorithm();
-  ledDisplay.displayIcon(BITMAP_ALGORITHMS[sequencer.getAlgorithm()]);
-  lastSettingDisplayTimeMillis = millis();
+  displaySettingIcon(BITMAP_ALGORITHMS[sequencer.getAlgorithm()]);
 }
 
 
@@ -787,9 +791,7 @@ void updateAlgorithm()
 void updateScale()
 {
   sequencer.setScale((sequencer.getScale() + 1) % MAX_SCALE_COUNT);
-
-  ledDisplay.displayIcon(BITMAP_NUMERALS[sequencer.getScale()]);
-  lastSettingDisplayTimeMillis = millis();
+  displaySettingIcon(BITMAP_NUMERALS[sequencer.getScale()]);
 }
 
 
@@ -1042,10 +1044,9 @@ void updateTonic(int incr)
   
   sequencer.setTonic(tonicNotes[tonicIndex]);
   
-  // get this in case the sequencer changed the received tonic
-  ledDisplay.displayIcon(BITMAP_ALPHA[getMidiNoteIconIndex(sequencer.getTonic())]);
-  lastSettingDisplayTimeMillis = millis();
+  displaySettingIcon(BITMAP_ALPHA[getMidiNoteIconIndex(sequencer.getTonic())]);
 }
+
 
 
 uint8_t getMidiNoteIconIndex(uint8_t midinote)
@@ -1109,8 +1110,16 @@ void updateDisplay()
   
   byte scaledInputValue[MAX_ANALOG_INPUTS];
   
-  if (millis() - lastSettingDisplayTimeMillis > DISPLAY_SETTING_CHANGE_PERSIST_MILLIS)
+  // don't  update the display if we are waiting for the settings display timer to elapse
+  if (settingDisplayTimer.ready())
   {
+    
+    // if the settings is currently displayed, clear it
+    if (settingDisplayIconOn)
+    {
+      ledDisplay.clearScreen();
+      settingDisplayIconOn = false;
+    }
 
     currentNote = sequencer.getCurrentNote();
     currentStep = sequencer.getCurrentStep();
@@ -1204,13 +1213,23 @@ void updateDisplay()
 
     //display trigger
     ledDisplay.setPixel(7, 0, iTrigger == HIGH);
-
-
-
     ledDisplay.refresh();
   }
-
 }
+
+
+/*----------------------------------------------------------------------------------------------------------
+ * displaySettingIcon
+ * displays the given icon on the screen and sets a timer and a flag for it to be cleared after a set time
+ *----------------------------------------------------------------------------------------------------------
+ */
+void displaySettingIcon(const byte* bitmap)
+{
+  ledDisplay.displayIcon(bitmap);
+  settingDisplayTimer.start(DISPLAY_SETTING_CHANGE_PERSIST_MILLIS);
+  settingDisplayIconOn = true;
+}
+
 
 
 /*----------------------------------------------------------------------------------------------------------

@@ -107,24 +107,25 @@ class MutatingSequencer
     byte mutationProbability;
     byte noteProbability;
     byte tonicProbability;
-    byte rachetProbability; 
-    byte scatterProbability;
-    byte shufflePct;
+    byte rachetProbability;     // not used in final design
+    byte scatterProbability;    // not used in final design
+    byte shufflePct;            // not used in final design
     byte mutationAlgorithm;
 
     byte sequenceLength;
     byte scaleNoteCount;
-   // uint16_t noteLength;
     uint16_t nextStepNoteLength;
 
-    byte currentNote = 0;
     bool retrigState = false;
     byte retrigStep = 0;
+
+    byte currentNote = 0;
     byte currentStep = 0;                    
+
     int parameterLocks[MAX_PARAMETER_LOCKS][MAX_SEQUENCE_LENGTH];
 
     //byte syncPulseSteps;
-    byte syncPulseClockDivide; //todo allow fractional to accelerate clock
+    byte syncPulseClockDivide;              //todo allow fractional to accelerate clock
 
     uint32_t timeSinceLastSyncPulseMicros;
     uint32_t lastSyncPulseTimeMicros;
@@ -157,8 +158,6 @@ class MutatingSequencer
 
     bool ignoreNextSyncPulse;
     
-    //unsigned int nextStepTime;
-    //unsigned long lastSyncTime;
     
 };
 

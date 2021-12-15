@@ -538,56 +538,14 @@ void MutatingSequencer::syncPulse(int stepsPerClick)
       
     thisSyncPulseMicros = mozziMicros();
   
-    // subtracting unsigned longs should work even when they wrap, so don't need this
-    //if (lastSyncPulseTimeMicros <= thisSyncPulseMicros)
-    
     timeSinceLastSyncPulseMicros  = thisSyncPulseMicros - lastSyncPulseTimeMicros;
     lastSyncPulseTimeMicros       = thisSyncPulseMicros;
     
-    //Serial.print("syncPulse");
     nextStepTimeMillis = timeSinceLastSyncPulseMicros / (1000 * stepsPerClick) * syncPulseClockDivide;
-    //Serial.print(", timeSinceLastSyncPulseMicros=");
-    //Serial.println(timeSinceLastSyncPulseMicros);
-  
   
     // immediately make the timer ready, so next call to update will trigger next step
     stepTimer.start(0);   
-  /*
-    Serial.print(F("Sync Pulse.  Last Time="));
-    Serial.print(lastSyncPulseTimeMicros);
-    Serial.print(F(" This Time="));
-    Serial.print(thisSyncPulseMicros);
-    Serial.print(F(" Delta Time (millis)="));
-    Serial.print(timeSinceLastSyncPulseMicros/1000);
-    Serial.print(F(" Step Time (millis)="));
-    Serial.print(nextStepTimeMillis);
-    Serial.println();
-  */
   
-  
-  
-  /*
-    int timeSinceLastSync = millis() - lastSyncTime;
-    
-    // if time since last sync is < 20ms then ignore
-    if (timeSinceLastSync > 40)
-    {
-      // immediately make the timer ready, so next call to update will trigger next step
-      stepTimer.start(0);   
-    
-      //todo: syncClockDivide will be overridden by the trigger pulse - need to ignore trigger pulse 
-      //      every syncClockDivide ticks
-  
-      // add one millisecond so that the timer doesn't trigger just before the next pulse
-      nextStepTime = (syncClockDivide * (timeSinceLastSync / syncPulseSteps))
-                     + ((nextStepTime * (shufflePct-50)/100))
-                     + 1 ; 
-    
-      //Serial.print("sync pulse!\n");
-    }
-  
-    lastSyncTime = millis();
-  */
   }
 }
 
@@ -850,18 +808,18 @@ byte MutatingSequencer::getMutationProbability()
 void MutatingSequencer::printParameters()
 {
   /*
-  Serial.print("Parameters: note prob=");
+  Serial.print(F("Parameters: note prob="));
   Serial.print(noteProbability);
-  Serial.print(",  mutate=");
+  Serial.print(F(",  mutate="));
   Serial.print(mutationProbability);
 
-  Serial.print(",  skip=");
+  Serial.print(F(",  skip="));
   Serial.print(skipProbability);
-  Serial.print(",  tonic=");
+  Serial.print(F(",  tonic="));
   Serial.print(tonicProbability);
-  Serial.print(",  rachet=");
+  Serial.print(F(",  rachet="));
   Serial.print(rachetProbability);
-  Serial.print(",  shuffle=");
+  Serial.print(F(",  shuffle="));
   Serial.print(shufflePct);
 
   

@@ -13,6 +13,18 @@ static int32_t maxAudioRange = 0;
 
 
 /*----------------------------------------------------------------------------------------------------------
+ * MutatingSource::MutatingSource()
+ *  empty constructor for base class
+ *----------------------------------------------------------------------------------------------------------
+ */
+MutatingSource::MutatingSource()
+{
+  // null constructor
+}
+
+
+
+/*----------------------------------------------------------------------------------------------------------
  * MutatingPhasor::MutatingPhasor()
  *  constructor
  *----------------------------------------------------------------------------------------------------------
@@ -20,9 +32,9 @@ static int32_t maxAudioRange = 0;
 MutatingPhasor::MutatingPhasor()
 {
   // phasor constructor;
-  masterGain = 255;
-  lastNote  = 30;
-  lastPitch = mtof(lastNote);
+  masterGain    = 255;
+  lastNote      = 30;
+  lastPitch     = mtof(lastNote);
   aPhasor1.setFreq(lastPitch);
   aPhasor2.setFreq(lastPitch);
   lowPassFilter.setCutoffFreqAndResonance(255,0);
