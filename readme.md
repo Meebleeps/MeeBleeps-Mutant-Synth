@@ -7,7 +7,8 @@ https://www.youtube.com/watch?v=d2Lml1Z9uWc
 Source released under Creative Commons ttribution-NonCommercial-ShareAlike 4.0
 
 ***
-
+__Important build-note:__ my builds have used normally-closed switches, so the code assumes this.  A couple of people building this have had issues because they have normally-open switches, so to adjust for this edit the code in updateButtonControls() to invert the results of each call to digitalRead(). 
+***
 ## Synth Voice Features
 
 -    2 saw oscillators
