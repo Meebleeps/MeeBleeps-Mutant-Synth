@@ -530,13 +530,27 @@ void updateSyncTrigger()
  */
 void updateButtonControls()
 {
-  
+  //  IMPORTANT:
+  //  These calls assume you are using NORMALLY CLOSED switches, which is what I used in the build
+  //  if your switches are NORMALLY OPEN delete the definition of SWITCH_TYPE_NORMALLY_CLOSED
+  #define SWITCH_TYPE_NORMALLY_CLOSED
+
+  #ifdef SWITCH_TYPE_NORMALLY_CLOSED
   iCurrentButton[0] = digitalRead(PIN_BUTTON0);   // read the button 0 pin
   iCurrentButton[1] = digitalRead(PIN_BUTTON1);   // read the button 1 pin
   iCurrentButton[2] = digitalRead(PIN_BUTTON2);   // read the button 2 pin
   iCurrentButton[3] = digitalRead(PIN_BUTTON3);   // read the button 3 pin
   iCurrentButton[4] = digitalRead(PIN_BUTTON4);   // read the button 3 pin
   iCurrentButton[5] = digitalRead(PIN_BUTTON5);   // read the button 3 pin
+  #else
+  iCurrentButton[0] = !digitalRead(PIN_BUTTON0);   // read the button 0 pin
+  iCurrentButton[1] = !digitalRead(PIN_BUTTON1);   // read the button 1 pin
+  iCurrentButton[2] = !digitalRead(PIN_BUTTON2);   // read the button 2 pin
+  iCurrentButton[3] = !digitalRead(PIN_BUTTON3);   // read the button 3 pin
+  iCurrentButton[4] = !digitalRead(PIN_BUTTON4);   // read the button 3 pin
+  iCurrentButton[5] = !digitalRead(PIN_BUTTON5);   // read the button 3 pin
+  #endif
+
 
   // if func button is not pressed, all UI controls are normal
   if (iCurrentButton[BUTTON_INPUT_FUNC] != iLastButton[BUTTON_INPUT_FUNC])
