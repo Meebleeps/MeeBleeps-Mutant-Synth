@@ -39,6 +39,32 @@ __Important build-note:__ my builds have used normally-closed switches, so the c
 -    9V DC Power input
 -    Access to nano's USB port for firmware upgrades
 
+
+## Controls
+
+### Button Controls
+
+| Button Index 	| Pin	| Name		| Function					| Alternative Function	|
+| --- 		| --- 	| --- 		| --- 						| --- 			|
+| 0		| D4	| Func		| Access alternative control function 		| n/a | 
+| 1		| D5	| Start		| Starts/stops the sequencer			| Tap-tempo | 
+| 2		| D6	| Scales	| Cycle through available musical scales	| Cycle through available mutation algorithms | 
+| 3		| D3	| Root		| Increase the tonic note			| Decrease the tonic note | 
+| 4		| D10	| Rec		| Hold to record knob movements			| Hold while moving a knob to clear the recorded value  | 
+| 5		| D12	| Clone		| Retrigger the current step
+
+
+### Analog Controls
+
+| Input Index 	| Pin	| Name		| Function						| Alternative Function	|
+| --- 		| --- 	| --- 		| --- 							| --- 			|
+| 0		| A0	| Species		| Oscillator 2 detune					| Amount of sidechain/ducking effect	|
+| 1		| A1	| Lifespan	| Note length						| n/a	|
+| 2		| A2	| Mutation	| Probabilty that sequence will change over time	| Probability of a note playing on any step	|
+| 3		| A3	| Shape		| Shape of the filter envelope				| n/a	|
+| 4		| A4	| Colour	| Base filter value					| Filter resonance	|
+| 5		| A5	| Population	| Number of steps in the sequence 1-16			| n/a	|
+
 ## Problems (mostly hardware due to this being my first project!)
 
 -    some sort of overflow bug linked to the low pass filter which causes the unit to enter a distorted output state until the cutoff is set to zero
