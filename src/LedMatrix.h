@@ -33,7 +33,7 @@
 #define LED_INTENSITY   10
 #define LED_SCAN_LIMIT  11
 #define LED_SHUTDOWN    12
-#define LED_DISPLAYTEST 16
+#define LED_DISPLAYTEST 15
 
 class LedMatrix
 {
