@@ -1,4 +1,6 @@
-# Meebleeps Mutant Mozzi Synth
+# Meebleeps / Wirehead Mutant Mozzi Synth
+
+* Meebleeps was my personal project and was rebranded as Wirehead Instruments in 2023 to avoid brand confusion with MeeBlip - another completely separate synth design company.
 
 My first Arduino project started with the plan to push lfo/envelope voltages to my Volca Modular, but thanks to inspiration from Hagiwo and the Mozzi Library it turned into a cool little generative synth that I can let run all day, built to sync & fit with my Volca collection.
 
